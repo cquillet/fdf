@@ -6,7 +6,7 @@
 /*   By: cquillet <cquillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 06:53:16 by cquillet          #+#    #+#             */
-/*   Updated: 2017/10/22 19:40:21 by cquillet         ###   ########.fr       */
+/*   Updated: 2018/02/06 15:46:42 by cquillet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static t_box	limits_simple_iso(t_fdf fdf)
 			coord.z = fdf.map.z[coord.y][coord.x];
 			pix = conv_3d_to_pixel(coord, 0, fdf.proj);
 			if (coord.x || coord.y)
-				redim_box_pixel(&box, pix);
+				box_redim(&box, pix);
 			else
 				box = create_box(pix.x, pix.x, pix.y, pix.y);
 			coord.x++;
