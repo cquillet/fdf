@@ -6,7 +6,7 @@
 #    By: cquillet <cquillet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/09 16:13:19 by cquillet          #+#    #+#              #
-#    Updated: 2018/02/10 20:38:25 by cquillet         ###   ########.fr        #
+#    Updated: 2018/02/10 20:44:06 by cquillet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,13 +45,15 @@ OBJ = $(SRC:%.c=%.o)
 
 RM = rm -f
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re lib
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): lib $(OBJ)
+	$(CC) $(LDFLAGS) $(OBJ) -o $@ $(LDLIBS)
+
+lib:
 	make -C $(DIRLIBS)
-	$(CC) $(LDFLAGS) $? -o $@ $(LDLIBS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $? -o $@
