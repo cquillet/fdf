@@ -6,7 +6,7 @@
 #    By: cquillet <cquillet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/09 16:13:19 by cquillet          #+#    #+#              #
-#    Updated: 2018/02/06 15:43:06 by cquillet         ###   ########.fr        #
+#    Updated: 2018/02/10 19:12:11 by cquillet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,21 +19,22 @@ VERSION_GET = $(shell sw_vers | grep "ProductVersion:" | grep -o "[0-9]\+\.[0-9]
 SIERRA = 10.12
 EL_CAPITAN = 10.11
 
-ifeq ($(VERSION_GET), $(SIERRA))
-DIRMLX = minilibx_macos_sierra
-else
-DIRMLX = minilibx_macos
-endif
-
-DIRHEADER = ./libft/includes ./$(DIRMLX)
-
-DIRLIB = ./libft ./$(DIRMLX)
-
 CC = gcc
 
+DIRGRAPHLIBS = ../graphiclibs
+ifeq ($(VERSION_GET), $(SIERRA))
+DIRMLX = $(DIRGRAPHLIBS)/minilibx_macos_sierra
+else
+DIRMLX = $(DIRGRAPHLIBS)/minilibx_macos
+endif
+
+DIRLIBS = ../libs $(DIRMLX)
+
+DIRLIBFT = ../libs/libft
+DIRHEADER = $(DIRLIBFT)/includes $(DIRMLX)
 CFLAGS = $(DIRHEADER:%=-I%) -Wall -Wextra -Werror
 
-LDFLAGS = $(DIRLIB:%=-L%) -framework OpenGL -framework AppKit
+LDFLAGS = $(DIRLIBS:%=-L%) -framework OpenGL -framework AppKit
 LIBNAME = libft.a libmlx.a libm.a
 LDLIBS = $(LIBNAME:lib%.a=-l%)
 
@@ -49,7 +50,7 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C libft
+	make -C $(DIRLIBFT)
 	make -C $(DIRMLX)
 	$(CC) $(LDFLAGS) $? -o $@ $(LDLIBS)
 
@@ -57,12 +58,12 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -c $? -o $@
 
 clean:
-	make -C libft clean
+	make -C $(DIRLIBFT) clean
 	make -C $(DIRMLX) clean
 	$(RM) $(OBJ)
 
 fclean:
-	make -C libft fclean
+	make -C $(DIRLIBFT) fclean
 	make -C $(DIRMLX) clean
 	$(RM) $(OBJ)
 	$(RM) $(NAME)
