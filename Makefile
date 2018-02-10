@@ -6,7 +6,7 @@
 #    By: cquillet <cquillet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/09 16:13:19 by cquillet          #+#    #+#              #
-#    Updated: 2018/02/10 19:12:11 by cquillet         ###   ########.fr        #
+#    Updated: 2018/02/10 20:38:25 by cquillet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,16 +21,16 @@ EL_CAPITAN = 10.11
 
 CC = gcc
 
-DIRGRAPHLIBS = ../graphiclibs
+DIRLIBS = ../libs
+DIRGRAPHLIBS = $(DIRLIBS)
+
 ifeq ($(VERSION_GET), $(SIERRA))
 DIRMLX = $(DIRGRAPHLIBS)/minilibx_macos_sierra
 else
 DIRMLX = $(DIRGRAPHLIBS)/minilibx_macos
 endif
 
-DIRLIBS = ../libs $(DIRMLX)
-
-DIRLIBFT = ../libs/libft
+DIRLIBFT = $(DIRLIBS)/libft
 DIRHEADER = $(DIRLIBFT)/includes $(DIRMLX)
 CFLAGS = $(DIRHEADER:%=-I%) -Wall -Wextra -Werror
 
@@ -50,21 +50,18 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C $(DIRLIBFT)
-	make -C $(DIRMLX)
+	make -C $(DIRLIBS)
 	$(CC) $(LDFLAGS) $? -o $@ $(LDLIBS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $? -o $@
 
 clean:
-	make -C $(DIRLIBFT) clean
-	make -C $(DIRMLX) clean
+	make -C $(DIRLIBS) clean
 	$(RM) $(OBJ)
 
 fclean:
-	make -C $(DIRLIBFT) fclean
-	make -C $(DIRMLX) clean
+	make -C $(DIRLIBS) fclean
 	$(RM) $(OBJ)
 	$(RM) $(NAME)
 
