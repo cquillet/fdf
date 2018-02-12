@@ -15,23 +15,11 @@ NAME = fdf
 DIRSRC = .
 DIROBJ = .
 
-VERSION_GET = $(shell sw_vers | grep "ProductVersion:" | grep -o "[0-9]\+\.[0-9]\+")
-SIERRA = 10.12
-EL_CAPITAN = 10.11
-
 CC = gcc
 
 DIRLIBS = ../libs
-DIRGRAPHLIBS = $(DIRLIBS)
 
-ifeq ($(VERSION_GET), $(SIERRA))
-DIRMLX = $(DIRGRAPHLIBS)/minilibx_macos_sierra
-else
-DIRMLX = $(DIRGRAPHLIBS)/minilibx_macos
-endif
-
-DIRLIBFT = $(DIRLIBS)/libft
-DIRHEADER = $(DIRLIBFT)/includes $(DIRMLX)
+DIRHEADER = $(DIRLIBS)/includes
 CFLAGS = $(DIRHEADER:%=-I%) -Wall -Wextra -Werror
 
 LDFLAGS = $(DIRLIBS:%=-L%) -framework OpenGL -framework AppKit
@@ -45,15 +33,13 @@ OBJ = $(SRC:%.c=%.o)
 
 RM = rm -f
 
-.PHONY: all clean fclean re lib
+.PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): lib $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) -o $@ $(LDLIBS)
-
-lib:
+$(NAME): $(OBJ)
 	make -C $(DIRLIBS)
+	$(CC) $(LDFLAGS) $(OBJ) -o $@ $(LDLIBS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $? -o $@
@@ -68,3 +54,4 @@ fclean:
 	$(RM) $(NAME)
 
 re: fclean all
+
