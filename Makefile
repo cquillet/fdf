@@ -19,12 +19,13 @@ CC = gcc
 
 DIRLIBS = ../libs
 
-DIRHEADER = $(DIRLIBS)/includes
+DIRHEADER = . $(DIRLIBS)/includes
 CFLAGS = $(DIRHEADER:%=-I%) -Wall -Wextra -Werror
 
 LDFLAGS = $(DIRLIBS:%=-L%) -framework OpenGL -framework AppKit
-LIBNAME = libft.a libmlx.a libm.a
-LDLIBS = $(LIBNAME:lib%.a=-l%)
+CUSTOMLIBS = libft.a libftprintf.a libmlx.a
+LIBS = $(CUSTOMLIBS) libm.a
+LDLIBS = $(LIBS:lib%.a=-l%)
 
 SRC = check_map.c color_map.c draw.c fdf.c fdf_key_event.c fdf_mouse_event.c \
 get_map.c isometric.c main.c parsing.c projection.c
@@ -37,9 +38,11 @@ RM = rm -f
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	make -C $(DIRLIBS)
-	$(CC) $(LDFLAGS) $(OBJ) -o $@ $(LDLIBS)
+$(NAME): $(CUSTOMLIBS) $(OBJ)
+	$(CC) $(LDFLAGS) $(LDLIBS) $(OBJ) -o $@
+
+%.a:
+	make -C $(DIRLIBS) $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $? -o $@
