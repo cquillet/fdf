@@ -12,9 +12,6 @@
 
 NAME = fdf
 
-DIRSRC = .
-DIROBJ = .
-
 CC = gcc
 
 DIRLIBS = ../libs
@@ -34,15 +31,15 @@ OBJ = $(SRC:%.c=%.o)
 
 RM = rm -f
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libs
 
-all: $(NAME)
+all: libs $(NAME)
 
-$(NAME): $(CUSTOMLIBS) $(OBJ)
+libs:
+	make -C $(DIRLIBS) $(CUSTOMLIBS)
+
+$(NAME): $(OBJ)
 	$(CC) $(LDFLAGS) $(LDLIBS) $(OBJ) -o $@
-
-%.a:
-	make -C $(DIRLIBS) $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $? -o $@
