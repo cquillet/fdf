@@ -1,14 +1,14 @@
 # fdf
 
-**You will need to download the "[libs](https://github.com/cquillet/libs)" project in the same directory you will clone "fdf" to run it**
+**You will need to download the [`libs`](https://github.com/cquillet/libs) project in the same directory you will clone `fdf` to run it**
 
-This is a program to draw simple maps in isometric 3D
+This is a program to draw simple maps in isometric 3D.
 
 *usage:* `fdf map_file`
 
-Some maps are in the directory *maps*
+Press `H` to show a little help.
 
-Press *H* to show a little help
+Some maps are in the directory *maps*.
 
 
 Example :
