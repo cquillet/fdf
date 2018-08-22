@@ -12,4 +12,4 @@ Some maps are in the directory *maps*
 #### Example :
 > `fdf maps/MGDS_CUSTOM_LOCALITY_TOKYO_JAPAN_OCEAN1_XXL.fdf`
 >
-> ![MGDS_CUSTOM_LOCALITY_TOKYO_JAPAN_OCEAN1_XXL](http://quillet.com/images/fdf.png)
+> ![MGDS_CUSTOM_LOCALITY_TOKYO_JAPAN_OCEAN1_XXL](https://raw.githubusercontent.com/cquillet/stuff/master/img/fdf.png)
